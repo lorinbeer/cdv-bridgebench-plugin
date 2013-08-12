@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="com.cordova.bridge.benchtest"
+      version="0.1.0">
+    <name>Cordova Bridge Benchtest Plugin</name>
+    <description>Benchmark Cordova bridge</description>
+    <license>Apache</license>
+    <keywords>cordova,bridge,benchmark</keywords>
+
+    <js-module src="www/DirectoryEntry.js" name="DirectoryEntry">
+        <clobbers target="window.DirectoryEntry" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">    
+        <config-file target="config.xml" parent="/*">
+            <feature name="File">
+                <param name="ios-package" value="CDVBridgeBench" /> 
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CDVURLCache.h" />
+        <source-file src="src/ios/CDVURLCache.m" />
+        
+        <header-file src="src/ios/NativeAction.h" /> 
+        <source-file src="src/ios/NativeAction.m" />
+
+        <!-- ios specific file apis -->
+        <js-module src="www/ios/Entry.js" name="Entry1">
+            <merges target="window.Entry" />
+        </js-module>
+        
+    </platform>    
+
+</plugin>
