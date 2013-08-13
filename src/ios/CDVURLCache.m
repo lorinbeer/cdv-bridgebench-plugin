@@ -9,6 +9,8 @@
 #import "CDVURLCache.h"
 //#import "GTMNSDictionary+URLArguments.h"
 #import "NativeAction.h"
+#import "../../CordovaLib/Classes/NSData+Base64.h"
+
 //#import "SBJsonWriter.h"
 
 // We'll intercept all requests going to the following host:
@@ -22,9 +24,9 @@ const NSString *kAppHost = @"cordova.plugin.file";
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request {
     
     NSURL *url = [request URL];
-    
-    // check the host to see if Javascript is trying to send a request to our app's "fake" host
+
     if ([[url host] caseInsensitiveCompare:(NSString *) kAppHost] == NSOrderedSame) {
+        
         
         NSString *action = nil;
         if ([[url pathComponents] count] > 1) { // use index 1 since index 0 is the '/'
@@ -33,13 +35,38 @@ const NSString *kAppHost = @"cordova.plugin.file";
             action = [[url pathComponents] objectAtIndex:1];
         }
         NSString *query = [url query];
+        
         NSString *method = [request HTTPMethod];
         NSDictionary *params = nil;
         
         if ([method isEqualToString:@"GET"]) {
+            NSArray * args = [query componentsSeparatedByString: @"&"];
+            
+            NSString * timestampstr = [args objectAtIndex:0];
+    
+            NSString * timestamp = [[timestampstr componentsSeparatedByString:@"="] objectAtIndex:1];
+            NSCachedURLResponse *cached1Response = nil;
+            NSData * data = [NSMutableData dataWithLength:1024];
+            //NSLog([data base64EncodedString]);
+            /*
+            NSString *jsonString = [NSString stringWithFormat: @"%@%@%@%@%@%@%@",
+                                    @"{\"",
+                                    [[[args objectAtIndex:0] componentsSeparatedByString:@"="] objectAtIndex:0],
+                                    @"\":\"",
+                                    [[[args objectAtIndex:0] componentsSeparatedByString:@"="] objectAtIndex:1],
+                                    @"\",\"data\":",
+                                    [data base64EncodedString],
+                                    "}"];
+            */
+            //NSData *jsonBody = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            NSURLResponse *res = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength: 1024/*[jsonBody length]*/ textEncodingName:nil];
+            cached1Response = [[NSCachedURLResponse alloc] initWithResponse:res data:data];
+
+            return cached1Response;
 
         }
-        
+     /*
         // we also want to extract any arguments passed in the request. In a GET, we can get these from the URL query
         // string. In requests with entities, we can get this from the request body (assume www-form encoded for our purposes
         // here, but we could also handle JSON entities)
@@ -75,6 +102,7 @@ const NSString *kAppHost = @"cordova.plugin.file";
             cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:res data:jsonBody];
         }
         return cachedResponse;
+    */
     }
     
     // if not matching our custom host, allow system to handle it
