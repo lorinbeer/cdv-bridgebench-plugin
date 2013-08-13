@@ -16,9 +16,22 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+
+function benchWebsocketBridge() {
+    console.log("Cordova Websocket BenchTest not implemented")
+}
+
+function benchCordovaBridge() {
+    console.log("Cordova Bridge BenchTest")
+}
+
+
 var app = {
     // Application Constructor
     initialize: function() {
+        console.log("FUCKFUCKFUCK");
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -33,6 +46,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        console.log("FUCKFUCKFUCK");
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
