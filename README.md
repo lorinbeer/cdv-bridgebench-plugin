@@ -1,4 +1,5 @@
-# JavaScript-to-Native communication bridge benchtest
+# JavaScript-to-Native 
+##communication bridge benchtest
 Performance tests for JS-Native communication across a variety of protocols.
 
 ## Platforms
@@ -6,6 +7,16 @@ Performance tests for JS-Native communication across a variety of protocols.
 basic xhr throughput, frequency and bandwidth tests
 ###android
 comming soon!
+
+## Methods
+### XHR
+### Websockets
+### Cordova Native Bridge
+
+## Metrics
+Throughput
+Bandwidth
+Frequency
 
 ## Installing
 ###ios
